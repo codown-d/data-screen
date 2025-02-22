@@ -8,7 +8,6 @@ import MapComponent from "./components/MapComponent";
 function App() {
   const headerRef = useRef(null);
   const size = useSize(headerRef);
-  
   const [colors, setColors] = useState<string[]>([]);
   let [data, setData] = useSetState({
     type1: [
