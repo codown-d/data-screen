@@ -1,10 +1,9 @@
-import CountUp from "react-countup";
-
-function Title(props: { className?: string; Title: number;bg:string }) {
-  let { className, Title,bg } = props;
+function Title(props: { className?: string; title: string }) {
+  let { className, title } = props;
   return (
-    <div className={`flex justify-center flex-col ${className}`}>
-      {Title}
+    <div className={`flex justify-center flex-col relative h-[42px] ${className}`}>
+      <img src="/img/title.png" alt="" className="absolute h-full w-full" />
+      {false && <span>{title}</span>}
     </div>
   );
 }

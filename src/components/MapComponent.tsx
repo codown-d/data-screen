@@ -1,9 +1,9 @@
 // src/Map.js
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
-import { calculatePathCenter } from "./utils";
-import { pathList } from "./constant";
 import { useSize } from "ahooks";
+import { pathList } from "../constant";
+import { calculatePathCenter } from "../utils";
 
 const MapComponent = () => {
   const svgRef = useRef(null);

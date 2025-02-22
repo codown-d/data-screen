@@ -10,7 +10,7 @@ function ChartType1(props: {
 
   return (
     <div className={`flex justify-center flex-col ${className}`}>
-      <span className="flex justify-center text-[12px]">{type}</span>
+      <span className="flex justify-center text-[12px] text-[#8C99B3] mb-1">{type}</span>
       <div className="flex justify-center">
         <CountUp
           end={num}
@@ -19,7 +19,6 @@ function ChartType1(props: {
           className=" w-[146px] z-10 flex justify-center font-bold text-[40px] text-[#D0E0FF] leading-[48px]"
         />
       </div>
-
       <div className="flex justify-center mt-[-30px]">
         <img src={img} alt="" className="w-[146px]" />
       </div>
