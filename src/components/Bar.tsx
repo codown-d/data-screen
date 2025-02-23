@@ -2,7 +2,7 @@ import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import * as echarts from "echarts";
 import { EChartsInitOpts, EChartsOption, EChartsType } from "echarts";
 import { get, merge } from "lodash";
-let Line = forwardRef(
+let Bar = forwardRef(
   (
     props: {
       className?: string;
@@ -50,40 +50,40 @@ let Line = forwardRef(
           yAxis: {
             type: "value",
             splitLine: {
-              show: true, // 显示网格线
+              show: true, 
               lineStyle: {
-                type: "dashed", // 设置虚线样式
-                color: "#374052", // 设置虚线颜色
-                width: 1, // 设置虚线宽度
+                type: "dashed", 
+                color: "#374052", 
+                width: 1, 
               },
             },
             axisLabel: {
-              color: "#8C99B3", // 设置 x 轴坐标的颜色
+              color: "#8C99B3", 
             },
           },
           series: [
             {
               data: [],
-              type: "line",
-              symbolSize: 10,
-              itemStyle: {
-                borderColor: "#000", // 边框颜色
-                borderWidth: 2, // 边框宽度
-              },
-            },
-            {
-              data: data?.map(() => 0),
               type: "bar",
+              barWidth: 20,
+              itemStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  { offset: 0, color: "#D9EFFF" },
+                  { offset: 0.5, color: "#64BCFF" },
+                  { offset: 1, color: "#3977F3" },
+                ]),
+              },
+              label: {
+                show: true,
+                position: "top",
+                color: "#D9EFFF",
+              },
               showBackground: true,
-              barWidth: 36,
               backgroundStyle: {
                 color: new echarts.graphic.LinearGradient(0, 0, 1, 1, [
                   { offset: 0, color: "rgba(57,119,243,0.16)" },
                   { offset: 1, color: "rgba(123,241,194,0)" },
                 ]),
-              },
-              itemStyle: {
-                color: "none",
               },
             },
           ],
@@ -101,4 +101,4 @@ let Line = forwardRef(
   }
 );
 
-export default Line;
+export default Bar;

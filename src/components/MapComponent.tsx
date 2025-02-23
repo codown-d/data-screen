@@ -10,19 +10,17 @@ const MapComponent = () => {
   const ref = useRef(null);
   const size = useSize(ref);
   useEffect(() => {
-    if(!svgRef.current)return;
+    if (!svgRef.current) return;
     let svg = d3.select(svgRef.current);
-    console.log(svg,svgRef.current)
-    // svg.call(
-    //   d3
-    //     .zoom()
-    //     .scaleExtent([0.1, 4])
-    //     .on("zoom", (event) => {
-    //       let { transform } = event;
-    //       console.log(d3.select(".scatter_g"),transform,d3.select(".scatter_g"))
-    //       // d3.select(".scatter_g").duration(10).attr("transform", transform);
-    //     })
-    // );
+    svg.call(
+      d3
+        .zoom()
+        .scaleExtent([0.1, 4])
+        .on("zoom", (event) => {
+          let { transform } = event;
+          d3.select(".scatter_g").attr("transform", transform);
+        })
+    );
   }, []);
   return (
     <div ref={ref} className="flex w-full h-full">
@@ -32,26 +30,16 @@ const MapComponent = () => {
         viewBox="-107 585 1976 1210"
         ref={svgRef}
       >
-        <defs>
-          <filter id="drop-shadow" x="-50%" y="-50%" width="200%" height="200%">
-            <feDropShadow
-              dx="4"
-              dy="4"
-              stdDeviation="3"
-              floodColor="rgba(0, 0, 0, 0.1)"
-            />
-          </filter>
-        </defs>
         <g className="scatter_g">
-          {pathList.slice(0, 1).map((item,index) => {
+          {pathList.slice(0, 1).map((item, index) => {
             return (
               <>
                 {new Array(10).fill("").map((ite, idx) => {
                   return (
                     <path
                       transform={`translate(0, ${idx * 1})`}
-                      key={item.id+idx}
-                      stroke={"#00fff3"}
+                      key={item.id + idx}
+                      stroke={"#c0dfff"}
                       strokeWidth={2}
                       fillOpacity={0}
                       {...item}
@@ -59,7 +47,7 @@ const MapComponent = () => {
                   );
                 })}
                 <path
-                  key={item.id+index}
+                  key={item.id + index}
                   stroke={"#fff"}
                   strokeWidth={1}
                   fillOpacity={0}
@@ -74,9 +62,8 @@ const MapComponent = () => {
             return (
               <g key={item.id}>
                 <path
-                  stroke={"#333"}
+                  stroke={"#c0dfff"}
                   strokeWidth={1}
-                  strokeDasharray={"1,6"}
                   fill={"#eee"}
                   {...item}
                   onMouseEnter={(e) => {
@@ -86,16 +73,30 @@ const MapComponent = () => {
                     d3.select(e.target).attr("fill", "#eee"); // 高亮颜色
                   }}
                 />
-                <text
-                  x={centerX - 20}
-                  y={centerY + 20}
-                  style={{
-                    fill: "#fff",
-                    fontSize: 18,
-                  }}
+                <foreignObject
+                  x={centerX - 50}
+                  y={centerY-10}
+                  width="80"
+                  height="120"
                 >
-                  {item.label}
-                </text>
+                  <div className="foreign-div"
+                    style={{
+                      position:'relative',
+                      fill: "#fff",
+                      textAlign:'center',
+                      fontSize: 18,
+                      padding:'2px 0px',
+                      fontWeight:'bold',
+                      background:'#3C5BF6',
+                      color:'#fff',
+                      borderLeft:'6px solid #fff',
+                      borderRight:'6px solid #fff',
+                      boxShadow: '0px 4px 4px 0px rgba(10,39,183,0.4), inset 0px 0px 5px 0px #7D92FF'
+                    }}
+                  >
+                    <p> {item.label}</p>
+                  </div>
+                </foreignObject>
               </g>
             );
           })}

@@ -16,7 +16,7 @@ let Pie = forwardRef(
     let pieRef = useRef(null!);
     let myChart = useRef<EChartsType>(null!);
     useEffect(() => {
-      if (!pieRef.current||myChart.current) return;
+      if (!pieRef.current || myChart.current) return;
       myChart.current = echarts.init(pieRef.current, null, initOpts);
       myChart.current.on("finished", () => {
         props.onReady?.(myChart.current);
@@ -34,6 +34,7 @@ let Pie = forwardRef(
             trigger: "item",
           },
           legend: {
+            show: false,
             top: "5%",
             left: "center",
           },
@@ -41,19 +42,7 @@ let Pie = forwardRef(
             {
               name: "Access From",
               type: "pie",
-              radius: ["47%", "53%"],
-              padAngle: 4,
-              avoidLabelOverlap: false,
-              itemStyle: {
-                borderRadius: 20,
-              },
-              label: {
-                show: false,
-                position: "center",
-              },
-              labelLine: {
-                show: false,
-              },
+              radius: ["45%", "55%"],
               data: [],
             },
           ],

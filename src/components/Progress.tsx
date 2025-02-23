@@ -5,30 +5,26 @@ function ProgressChart(props: {
   className?: string;
   title: string;
   num: number;
+  percent:number
 }) {
-  let { className, title, num } = props;
+  let { className, title, num,percent } = props;
   const twoColors: ProgressProps["strokeColor"] = {
     "0%": "#3977F3",
     "100%": "#D9EFFF",
   };
   return (
-    <div className={`flex justify-between h-[42px] w-full text-[14px] ${className}`}>
-      <div className="w-[60px]">
-        <TypographyTooltip
-          className="!text-[#fff]"
-          text={title}
-        />
+    <div
+      className={`flex justify-between items-center h-[42px] w-full text-[14px] ${className}`}
+    >
+      <div className="flex">
+        <div className="w-[80px] ml-[20px]">
+          <TypographyTooltip className="!text-[#fff]" text={title} />
+        </div>
+        <div className="w-[230px]">
+          <Progress percent={percent} showInfo={false} strokeColor={twoColors} />
+        </div>
       </div>
-
-      <div className="w-[320px]">
-        <Progress
-          percent={30}
-          className="w-[320px]"
-          showInfo={false}
-          strokeColor={twoColors}
-        />
-      </div>
-      <span className="text-[#fff] font-bold w-0 flex-1">{num}</span>
+      <span className="text-[#fff] font-bold mr-3">{num}</span>
     </div>
   );
 }
