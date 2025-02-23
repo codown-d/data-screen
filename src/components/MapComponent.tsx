@@ -9,6 +9,21 @@ const MapComponent = () => {
   const svgRef = useRef(null);
   const ref = useRef(null);
   const size = useSize(ref);
+  useEffect(() => {
+    if(!svgRef.current)return;
+    let svg = d3.select(svgRef.current);
+    console.log(svg,svgRef.current)
+    // svg.call(
+    //   d3
+    //     .zoom()
+    //     .scaleExtent([0.1, 4])
+    //     .on("zoom", (event) => {
+    //       let { transform } = event;
+    //       console.log(d3.select(".scatter_g"),transform,d3.select(".scatter_g"))
+    //       // d3.select(".scatter_g").duration(10).attr("transform", transform);
+    //     })
+    // );
+  }, []);
   return (
     <div ref={ref} className="flex w-full h-full">
       <svg
@@ -23,19 +38,19 @@ const MapComponent = () => {
               dx="4"
               dy="4"
               stdDeviation="3"
-              flood-color="rgba(0, 0, 0, 0.1)"
+              floodColor="rgba(0, 0, 0, 0.1)"
             />
           </filter>
         </defs>
-        <g>
-          {pathList.slice(0, 1).map((item) => {
+        <g className="scatter_g">
+          {pathList.slice(0, 1).map((item,index) => {
             return (
               <>
-                {new Array(10).fill("").map((ite, index) => {
+                {new Array(10).fill("").map((ite, idx) => {
                   return (
                     <path
-                      transform={`translate(0, ${index * 1})`}
-                      key={item.id}
+                      transform={`translate(0, ${idx * 1})`}
+                      key={item.id+idx}
                       stroke={"#00fff3"}
                       strokeWidth={2}
                       fillOpacity={0}
@@ -44,7 +59,7 @@ const MapComponent = () => {
                   );
                 })}
                 <path
-                  key={item.id}
+                  key={item.id+index}
                   stroke={"#fff"}
                   strokeWidth={1}
                   fillOpacity={0}
