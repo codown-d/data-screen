@@ -89,8 +89,8 @@ const MapComponent = () => {
                       fontWeight:'bold',
                       background:'#3C5BF6',
                       color:'#fff',
-                      borderLeft:'6px solid #fff',
-                      borderRight:'6px solid #fff',
+                      borderLeft:'4px solid #fff',
+                      borderRight:'4px solid #fff',
                       boxShadow: '0px 4px 4px 0px rgba(10,39,183,0.4), inset 0px 0px 5px 0px #7D92FF'
                     }}
                   >
