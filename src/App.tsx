@@ -77,7 +77,7 @@ function App() {
   return (
     <div
       className="flex relative h-full overflow-hidden main"
-      style={{ background: "rgb(15,28,58)" }}
+      style={{ background: "url(/img/main-bg.png) no-repeat center center",backgroundSize:'100% 100%' }}
     >
       <img
         src="/img/header.png"

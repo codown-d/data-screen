@@ -30,6 +30,16 @@ const MapComponent = () => {
         viewBox="-107 585 1976 1210"
         ref={svgRef}
       >
+        <defs>
+          <pattern
+            id="image-pattern"
+            patternUnits="userSpaceOnUse"
+            width="700"
+            height="600"
+          >
+            <image href="/img/map.png" x="0" y="0" />
+          </pattern>
+        </defs>
         <g className="scatter_g">
           {pathList.slice(0, 1).map((item, index) => {
             return (
@@ -64,34 +74,36 @@ const MapComponent = () => {
                 <path
                   stroke={"#c0dfff"}
                   strokeWidth={1}
-                  fill={"#eee"}
+                  fill={"url(#image-pattern)"}
                   {...item}
                   onMouseEnter={(e) => {
-                    d3.select(e.target).attr("fill", "orange"); // 高亮颜色
+                    d3.select(e.target).attr("fill", "#c0dfff"); // 高亮颜色
                   }}
                   onMouseLeave={(e) => {
-                    d3.select(e.target).attr("fill", "#eee"); // 高亮颜色
+                    d3.select(e.target).attr("fill", "url(#image-pattern)"); // 高亮颜色
                   }}
                 />
                 <foreignObject
                   x={centerX - 50}
-                  y={centerY-10}
+                  y={centerY - 10}
                   width="80"
-                  height="120"
+                  height="50"
                 >
-                  <div className="foreign-div"
+                  <div
+                    className="foreign-div"
                     style={{
-                      position:'relative',
+                      position: "relative",
                       fill: "#fff",
-                      textAlign:'center',
+                      textAlign: "center",
                       fontSize: 18,
-                      padding:'2px 0px',
-                      fontWeight:'bold',
-                      background:'#3C5BF6',
-                      color:'#fff',
-                      borderLeft:'4px solid #fff',
-                      borderRight:'4px solid #fff',
-                      boxShadow: '0px 4px 4px 0px rgba(10,39,183,0.4), inset 0px 0px 5px 0px #7D92FF'
+                      padding: "2px 0px",
+                      fontWeight: "bold",
+                      background: "#3C5BF6",
+                      color: "#fff",
+                      borderLeft: "4px solid #fff",
+                      borderRight: "4px solid #fff",
+                      boxShadow:
+                        "0px 4px 4px 0px rgba(10,39,183,0.4), inset 0px 0px 5px 0px #7D92FF",
                     }}
                   >
                     <p> {item.label}</p>
