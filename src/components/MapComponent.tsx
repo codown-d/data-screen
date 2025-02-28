@@ -43,7 +43,7 @@ const MapComponent = () => {
         <g className="scatter_g">
           {pathList.slice(0, 1).map((item, index) => {
             return (
-              <>
+              <g key={item.id + index}>
                 {new Array(10).fill("").map((ite, idx) => {
                   return (
                     <path
@@ -57,14 +57,13 @@ const MapComponent = () => {
                   );
                 })}
                 <path
-                  key={item.id + index}
                   stroke={"#fff"}
                   strokeWidth={1}
                   fillOpacity={0}
                   {...item}
                   filter="url(#drop-shadow)"
                 />
-              </>
+              </g>
             );
           })}
           {pathList.slice(1).map((item) => {
