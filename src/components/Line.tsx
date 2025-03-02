@@ -75,7 +75,7 @@ let Line = forwardRef(
               data: data?.map(() => 0),
               type: "bar",
               showBackground: true,
-              barWidth: 36,
+              barWidth: 26,
               backgroundStyle: {
                 color: new echarts.graphic.LinearGradient(0, 0, 1, 1, [
                   { offset: 0, color: "rgba(57,119,243,0.16)" },
@@ -91,7 +91,7 @@ let Line = forwardRef(
         option
       );
       option && myChart.current && myChart.current?.setOption(newOption);
-    }, [myChart]);
+    }, [myChart,JSON.stringify(option)]);
     return (
       <div
         className={`flex justify-center flex-col ${className}`}

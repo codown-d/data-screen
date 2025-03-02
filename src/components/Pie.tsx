@@ -50,7 +50,7 @@ let Pie = forwardRef(
         option
       );
       option && myChart.current && myChart.current?.setOption(newOption);
-    }, [myChart]);
+    }, [JSON.stringify(option)]);
     return (
       <div
         className={`flex justify-center flex-col ${className}`}

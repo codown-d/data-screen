@@ -40,3 +40,21 @@
       label: "苍溪县",
     },
   ];
+  export const SegmentedOp=[
+    {
+      label: "总览",
+      value: "总览",
+    },
+    {
+      label: "担保",
+      value: "担保",
+    },
+    {
+      label: "小贷",
+      value: "小贷",
+    },
+    {
+      label: "应急转贷",
+      value: "应急转贷",
+    },
+  ]

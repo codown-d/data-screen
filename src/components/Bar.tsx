@@ -36,7 +36,7 @@ let Bar = forwardRef(
         {
           grid: {
             left: "12%",
-            top: "5%",
+            top: "10%",
             bottom: "10%",
             right: "2%",
           },
@@ -91,7 +91,7 @@ let Bar = forwardRef(
         option
       );
       option && myChart.current && myChart.current?.setOption(newOption);
-    }, [myChart]);
+    }, [myChart,JSON.stringify(option)]);
     return (
       <div
         className={`flex justify-center flex-col ${className}`}

@@ -47,137 +47,24 @@ function App() {
     { value: 0, name: "500万-1000万" },
     { value: 0, name: "1000万以上" },
   ]);
+  let [typeM, setTypeM] = useState([
+    { value: 10, name: "100万以下" },
+    { value: 0, name: "100万-500万" },
+    { value: 0, name: "500万-1000万" },
+    { value: 0, name: "1000万以上" },
+  ]);
   let [type4, setType4] = useState([
     { value: 10, name: "100万以下" },
     { value: 0, name: "100万-500万" },
     { value: 0, name: "500万-1000万" },
     { value: 0, name: "1000万以上" },
   ]);
+  let [type5, setType5] = useState<any[]>([]);
+  let [type6, setType6] = useState<any[]>([]);
   let getInit = useCallback(async () => {
-    let res1 = {
-      zbs1: 2536,
-      zje2: 290831.5797809999,
-      jzbs1: 3,
-      jzje2: 1111.6265,
-      hrfl3: [
-        {
-          je6: 100903.76,
-          hyname1: "农业",
-        },
-        {
-          je6: 189927.819781,
-          hyname1: "工业",
-        },
-      ],
-      jrfb100: 46605.764492,
-      jrfb500: 203352.115289,
-      jrfb1000: 22835,
-      jrfb1001: 18038.7,
-      status: 100,
-    };
-    //await indexleft();
-    let res2 = {
-      hrfl3: [
-        {
-          je6: 108064.203784,
-          djjg1: null,
-          bs1: 775,
-        },
-        {
-          je6: 95172.918346,
-          djjg1: "利州区",
-          bs1: 736,
-        },
-        {
-          je6: 8505.2,
-          djjg1: "剑阁县",
-          bs1: 75,
-        },
-        {
-          je6: 19780.25524,
-          djjg1: "旺苍县",
-          bs1: 217,
-        },
-        {
-          je6: 14682,
-          djjg1: "昭化区",
-          bs1: 198,
-        },
-        {
-          je6: 25629.142411,
-          djjg1: "朝天区",
-          bs1: 328,
-        },
-        {
-          je6: 9543.46,
-          djjg1: "苍溪县",
-          bs1: 103,
-        },
-        {
-          je6: 9454.4,
-          djjg1: "青川县",
-          bs1: 104,
-        },
-      ],
-      status: 100,
-    };
-    //await indexmiddle();
-    let res3 = {
-      data: [
-        {
-          year1: "2016",
-          jkje1: 17977,
-          zbye3: 2196.3300780000004,
-        },
-        {
-          year1: "2017",
-          jkje1: 30905,
-          zbye3: 1424.270512,
-        },
-        {
-          year1: "2018",
-          jkje1: 19992,
-          zbye3: 997.928487,
-        },
-        {
-          year1: "2019",
-          jkje1: 20561,
-          zbye3: 250.605996,
-        },
-        {
-          year1: "2020",
-          jkje1: 21118.5,
-          zbye3: 1233,
-        },
-        {
-          year1: "2021",
-          jkje1: 18749.5,
-          zbye3: 2559.877364,
-        },
-        {
-          year1: "2022",
-          jkje1: 17621.6,
-          zbye3: 1743.081323,
-        },
-        {
-          year1: "2023",
-          jkje1: 24227.3,
-          zbye3: 11123.800000000001,
-        },
-        {
-          year1: "2024",
-          jkje1: 79979.97148400001,
-          zbye3: 61573.926484,
-        },
-        {
-          year1: "2025",
-          jkje1: 2965.7082969999997,
-          zbye3: 2475.708297,
-        },
-      ],
-      status: 100,
-    };
-    //await indexright();
+    let res1 = await indexleft();
+    let res2 = await indexmiddle();
+    let res3 = await indexright();
     let {
       zbs1,
       zje2,
@@ -189,10 +76,7 @@ function App() {
       jrfb1000,
       jrfb1001,
     } = res1 as any;
-    console.log(res1);
-    console.log(res2);
-    console.log(res3);
-    setType1((pre:any) => {
+    setType1((pre: any) => {
       return merge(pre, [
         { value: zbs1 },
         { value: zje2 },
@@ -200,18 +84,53 @@ function App() {
         { value: jzje2 },
       ]);
     });
-    setType2(hrfl3.map((item: { je6: any; hyname1: any }) => ({
-      value: Number(item.je6).toFixed(2),
-      name: item.hyname1,
-    })));
-    setType3((pre:any) => {
-      return merge(pre, [
-        { value: jrfb100 },
-        { value: jrfb500 },
-        { value: jrfb1000 },
-        { value: jrfb1001 },
-      ].map(item=>({value:Number(item.value).toFixed(2)})));
+    setType2(
+      hrfl3.map((item: { je6: any; hyname1: any }) => ({
+        value: Number(item.je6).toFixed(2),
+        name: item.hyname1,
+      }))
+    );
+    setType3((pre: any) => {
+      return merge(
+        pre,
+        [
+          { value: jrfb100 },
+          { value: jrfb500 },
+          { value: jrfb1000 },
+          { value: jrfb1001 },
+        ].map((item) => ({ value: Number(item.value).toFixed(2) }))
+      );
     });
+    setTypeM(
+      res2.hrfl3.reduce((pre: any, item: any) => {
+        pre[item.djjg1 || "总计"] = item.je6;
+        return pre;
+      }, {})
+    );
+    setType4(
+      res2.hrfl3.filter(item=>item.djjg1).map((item: any) => {
+        return {
+          value: item.bs1,
+          name:item.djjg1
+        };
+      }).sort((a,b)=>b.value-a.value)
+    );
+    setType5(
+      res3.data.map((item: any) => {
+        return {
+          value: Number(item.jkje1).toFixed(2),
+          name:item.year1
+        };
+      })
+    );
+    setType6(
+      res3.data.map((item: any) => {
+        return {
+          value: Number(item.zbye3).toFixed(2),
+          name:item.year1
+        };
+      }).sort((a,b)=>b.name-a.name)
+    );
   }, []);
   useEffect(() => {
     getInit();
@@ -434,7 +353,7 @@ function App() {
                 })}
               </div>
               <Title
-                title={"行业分析"}
+                title={"业务发展"}
                 className="mt-[32px] mb-[22px]"
                 img="/img/ywfz.png"
               />
@@ -444,7 +363,7 @@ function App() {
                   option={{
                     series: [
                       {
-                        data: type2,
+                        data: type5,
                       },
                     ],
                   }}
@@ -455,7 +374,7 @@ function App() {
                   option={{
                     series: [
                       {
-                        data: type2,
+                        data: type6,
                       },
                     ],
                   }}
