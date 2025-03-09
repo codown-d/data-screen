@@ -22,22 +22,22 @@ function App() {
     {
       value: 1000,
       name: "笔数",
-      img: "/img/zs1.png",
+      img: "img/zs1.png",
     },
     {
       value: 1000,
       name: "金额",
-      img: "/img/zs2.png",
+      img: "img/zs2.png",
     },
     {
       value: 1000,
       name: "近一个月笔数",
-      img: "/img/zs3.png",
+      img: "img/zs3.png",
     },
     {
       value: 1000,
       name: "近一个月金额",
-      img: "/img/zs1.png",
+      img: "img/zs1.png",
     },
   ]);
   let [type2, setType2] = useState([]);
@@ -62,9 +62,9 @@ function App() {
   let [type5, setType5] = useState<any[]>([]);
   let [type6, setType6] = useState<any[]>([]);
   let getInit = useCallback(async () => {
-    let res1 = await indexleft();
-    let res2 = await indexmiddle();
-    let res3 = await indexright();
+    let res1:any = await indexleft();
+    let res2:any = await indexmiddle();
+    let res3:any = await indexright();
     let {
       zbs1,
       zje2,
@@ -108,12 +108,12 @@ function App() {
       }, {})
     );
     setType4(
-      res2.hrfl3.filter(item=>item.djjg1).map((item: any) => {
+      res2.hrfl3.filter((item: { djjg1: any; })=>item.djjg1).map((item: any) => {
         return {
           value: item.bs1,
           name:item.djjg1
         };
-      }).sort((a,b)=>b.value-a.value)
+      }).sort((a: { value: number; },b: { value: number; })=>b.value-a.value)
     );
     setType5(
       res3.data.map((item: any) => {
@@ -129,7 +129,7 @@ function App() {
           value: Number(item.zbye3).toFixed(2),
           name:item.year1
         };
-      }).sort((a,b)=>b.name-a.name)
+      }).sort((a: { name: number; },b: { name: number; })=>b.name-a.name)
     );
   }, []);
   useEffect(() => {
@@ -139,12 +139,12 @@ function App() {
     <div
       className="flex relative h-full overflow-hidden main"
       style={{
-        background: "url(/img/main-bg.png) no-repeat center center",
+        background: "url(img/main-bg.png) no-repeat center center",
         backgroundSize: "100% 100%",
       }}
     >
       <img
-        src="/img/header.png"
+        src="img/header.png"
         alt=""
         className="absolute top-0"
         ref={headerRef}
@@ -196,7 +196,7 @@ function App() {
             <Title
               title={"行业分析"}
               className=" mt-[22px] mb-[16px]"
-              img="/img/hyfb.png"
+              img="img/hyfb.png"
             />
             <div className="flex justify-between item-bg">
               <Pie
@@ -229,7 +229,7 @@ function App() {
                     type: "image",
                     id: "bg-image",
                     style: {
-                      image: "/img/pie-bg.png",
+                      image: "img/pie-bg.png",
                       width: 252,
                       height: 218,
                     },
@@ -267,7 +267,7 @@ function App() {
             <Title
               title={"金额分布"}
               className=" mt-[22px] mb-[16px]"
-              img="/img/jrfb.png"
+              img="img/jrfb.png"
             />
             <div className="flex justify-center items-center item-bg">
               <Pie
@@ -318,7 +318,7 @@ function App() {
                     type: "image",
                     id: "bg-image",
                     style: {
-                      image: "/img/pie-bg2.png",
+                      image: "img/pie-bg2.png",
                       width: 100,
                       height: 100,
                     },
@@ -336,7 +336,7 @@ function App() {
               <Title
                 title={"区域排名"}
                 className=" mb-[16px]"
-                img="/img/qypm.png"
+                img="img/qypm.png"
               />
               <div className="grid grid-cols-1 item-bg">
                 {type4.map((item, index) => {
@@ -355,7 +355,7 @@ function App() {
               <Title
                 title={"业务发展"}
                 className="mt-[32px] mb-[22px]"
-                img="/img/ywfz.png"
+                img="img/ywfz.png"
               />
               <div className="flex flex-col item-bg">
                 <Subtitle title={"发生额"} className="mb-4" />
@@ -386,7 +386,7 @@ function App() {
         </div>
       </div>
       <img
-        src="/img/footer.png"
+        src="img/footer.png"
         alt=""
         className="absolute bottom-0 "
         ref={headerRef}

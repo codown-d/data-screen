@@ -1,5 +1,5 @@
-import axios from "../utils/axios";
 import api from "./api";
+import axios from "./axios";
 
 export function indexleft(params?: any) {
   return axios.get(api.indexleft, { params });

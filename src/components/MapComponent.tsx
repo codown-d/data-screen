@@ -11,7 +11,7 @@ const MapComponent = () => {
   const size = useSize(ref);
   useEffect(() => {
     if (!svgRef.current) return;
-    let svg = d3.select(svgRef.current);
+    let svg:any = d3.select(svgRef.current);
     svg.call(
       d3
         .zoom()
@@ -37,7 +37,7 @@ const MapComponent = () => {
             width="700"
             height="600"
           >
-            <image href="/img/map.png" x="0" y="0" />
+            <image href="img/map.png" x="0" y="0" />
           </pattern>
         </defs>
         <g className="scatter_g">
@@ -75,10 +75,10 @@ const MapComponent = () => {
                   strokeWidth={1}
                   fill={"url(#image-pattern)"}
                   {...item}
-                  onMouseEnter={(e) => {
+                  onMouseEnter={(e:any) => {
                     d3.select(e.target).attr("fill", "#c0dfff"); // 高亮颜色
                   }}
-                  onMouseLeave={(e) => {
+                  onMouseLeave={(e:any) => {
                     d3.select(e.target).attr("fill", "url(#image-pattern)"); // 高亮颜色
                   }}
                 />
