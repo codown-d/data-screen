@@ -1,17 +1,17 @@
-// src/Map.js
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as d3 from "d3";
-import { useSize } from "ahooks";
+import { useInterval, useSize } from "ahooks";
 import { pathList } from "../constant";
-import { calculatePathCenter } from "../utils";
+import { calculatePathCenter, formatNumber } from "../utils";
 
-const MapComponent = () => {
+const MapComponent = (props: any) => {
   const svgRef = useRef(null);
   const ref = useRef(null);
   const size = useSize(ref);
+  const [count, setCount] = useState(0);
   useEffect(() => {
     if (!svgRef.current) return;
-    let svg:any = d3.select(svgRef.current);
+    const svg: any = d3.select(svgRef.current);
     svg.call(
       d3
         .zoom()
@@ -22,6 +22,33 @@ const MapComponent = () => {
         })
     );
   }, []);
+  const data = useMemo(() => {
+    return pathList.map((item) => {
+      return {
+        ...item,
+        ...props.data[item.id],
+      };
+    });
+  }, [props.data]);
+  useInterval(() => {
+    setCount((index) => {
+      if (index < 6) {
+        return index + 1;
+      } else {
+        return 0;
+      }
+    });
+  }, 10000);
+  const Amount = (props:any) => {
+    const {amount} = props
+    const data = formatNumber(amount);
+    return (
+      <span className="text-[#E0EAFF] text-[20px]">
+        {data.num}&nbsp;
+        <span className="text-[12px]">{data.unit}</span>
+      </span>
+    );
+  };
   return (
     <div ref={ref} className="flex w-full h-full">
       <svg
@@ -41,7 +68,7 @@ const MapComponent = () => {
           </pattern>
         </defs>
         <g className="scatter_g">
-          {pathList.slice(0, 1).map((item, index) => {
+          {data.slice(0, 1).map((item, index) => {
             return (
               <g key={item.id + index}>
                 {new Array(10).fill("").map((ite, idx) => {
@@ -66,7 +93,7 @@ const MapComponent = () => {
               </g>
             );
           })}
-          {pathList.slice(1).map((item) => {
+          {data.slice(1).map((item, index) => {
             const { centerX, centerY } = calculatePathCenter(item.d);
             return (
               <g key={item.id}>
@@ -75,39 +102,68 @@ const MapComponent = () => {
                   strokeWidth={1}
                   fill={"url(#image-pattern)"}
                   {...item}
-                  onMouseEnter={(e:any) => {
+                  onMouseEnter={(e: any) => {
                     d3.select(e.target).attr("fill", "#c0dfff"); // 高亮颜色
                   }}
-                  onMouseLeave={(e:any) => {
+                  onMouseLeave={(e: any) => {
                     d3.select(e.target).attr("fill", "url(#image-pattern)"); // 高亮颜色
                   }}
                 />
-                <foreignObject
-                  x={centerX - 50}
-                  y={centerY - 10}
-                  width="80"
-                  height="50"
-                >
-                  <div
-                    className="foreign-div"
-                    style={{
-                      position: "relative",
-                      fill: "#fff",
-                      textAlign: "center",
-                      fontSize: 18,
-                      padding: "2px 0px",
-                      fontWeight: "bold",
-                      background: "#3C5BF6",
-                      color: "#fff",
-                      borderLeft: "4px solid #fff",
-                      borderRight: "4px solid #fff",
-                      boxShadow:
-                        "0px 4px 4px 0px rgba(10,39,183,0.4), inset 0px 0px 5px 0px #7D92FF",
-                    }}
+
+                {count !== index ? (
+                  <foreignObject
+                    x={centerX - 50}
+                    y={centerY - 10}
+                    width="80"
+                    height="50"
                   >
-                    <p> {item.label}</p>
-                  </div>
-                </foreignObject>
+                    <div className=" foreign-div relative text-center text-white font-bold text-xl py-1.5 px-0 bg-[#3C5BF6] border-l-4 border-r-4 border-white shadow-[0px_4px_4px_0px_rgba(10,39,183,0.4),inset_0px_0px_5px_0px_#7D92FF]">
+                      <p> {item.label}</p>
+                    </div>
+                  </foreignObject>
+                ) : null}
+              </g>
+            );
+          })}
+          {data.slice(1).map((item, index) => {
+            const { centerX, centerY } = calculatePathCenter(item.d);
+            return (
+              <g key={item.id}>
+                {count !== index||item.amount==0 ? null : (
+                  <foreignObject
+                    x={centerX - 100}
+                    y={centerY - 130}
+                    width="204"
+                    height="173"
+                  >
+                    <div className="relative ">
+                      <img src="img/map-select.png" alt="" />
+                      <div className="absolute top-0 w-full">
+                        <div className="h-[24px] tex-[14px] text-center text-[#fff]">
+                          {item.label}
+                        </div>
+                        <div className="flex justify-around mt-2">
+                          <div className="flex flex-col items-center">
+                            <span className="text-[#8C99B3] text-[12px]">
+                              金额
+                            </span>
+                            <span className="text-[#E0EAFF] text-[20px]">
+                             <Amount amount={item.amount} />
+                            </span>
+                          </div>
+                          <div className="flex flex-col  items-center">
+                            <span className="text-[#8C99B3] text-[12px]">
+                              笔数
+                            </span>
+                            <span className="text-[#E0EAFF] text-[20px]">
+                              {item.num}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </foreignObject>
+                )}
               </g>
             );
           })}

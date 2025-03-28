@@ -2,7 +2,8 @@ import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import * as echarts from "echarts";
 import { EChartsInitOpts, EChartsOption, EChartsType } from "echarts";
 import { get, merge } from "lodash";
-let Line = forwardRef(
+import { chartFormat, formatAmount, formatNumber } from "../utils";
+const Line = forwardRef(
   (
     props: {
       className?: string;
@@ -35,7 +36,7 @@ let Line = forwardRef(
       let newOption = merge(
         {
           grid: {
-            left: "12%",
+            left: "18%",
             top: "5%",
             bottom: "10%",
             right: "2%",
@@ -59,6 +60,9 @@ let Line = forwardRef(
             },
             axisLabel: {
               color: "#8C99B3", // 设置 x 轴坐标的颜色
+              formatter: function (value:any) {
+                return chartFormat(value); // Y轴刻度也加单位
+              },
             },
           },
           series: [

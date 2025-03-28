@@ -2,6 +2,7 @@ import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import * as echarts from "echarts";
 import { EChartsInitOpts, EChartsOption, EChartsType } from "echarts";
 import { get, merge } from "lodash";
+import { chartFormat } from "../utils";
 let Bar = forwardRef(
   (
     props: {
@@ -35,7 +36,7 @@ let Bar = forwardRef(
       let newOption = merge(
         {
           grid: {
-            left: "12%",
+            left: "18%",
             top: "10%",
             bottom: "10%",
             right: "2%",
@@ -50,15 +51,18 @@ let Bar = forwardRef(
           yAxis: {
             type: "value",
             splitLine: {
-              show: true, 
+              show: true,
               lineStyle: {
-                type: "dashed", 
-                color: "#374052", 
-                width: 1, 
+                type: "dashed",
+                color: "#374052",
+                width: 1,
               },
             },
             axisLabel: {
-              color: "#8C99B3", 
+              color: "#8C99B3",
+              formatter: function (value:any) {
+                return chartFormat(value); // Y轴刻度也加单位
+              },
             },
           },
           series: [
@@ -91,7 +95,7 @@ let Bar = forwardRef(
         option
       );
       option && myChart.current && myChart.current?.setOption(newOption);
-    }, [myChart,JSON.stringify(option)]);
+    }, [myChart, JSON.stringify(option)]);
     return (
       <div
         className={`flex justify-center flex-col ${className}`}
